@@ -70,7 +70,7 @@ func (s Ts) Shuffle() {
 }
 
 func (s Ts) Sort(cmp func(a, b T) bool) {
-	sort.Sort(sliceSorter{
+	sorter := sliceSorter{
 		l: len(s),
 		less: func(i, j int) bool {
 			return cmp(s[i], s[j])
@@ -78,7 +78,11 @@ func (s Ts) Sort(cmp func(a, b T) bool) {
 		swap: func(i, j int) {
 			s[i], s[j] = s[j], s[i]
 		},
-	})
+	}
+	_ = sorter.Len
+	_ = sorter.Less
+	_ = sorter.Swap
+	sort.Sort(sorter)
 }
 
 type sliceSorter struct {
