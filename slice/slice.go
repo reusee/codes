@@ -1,17 +1,9 @@
 package slice
 
 import (
-	crand "crypto/rand"
-	"encoding/binary"
 	"math/rand"
 	"sort"
 )
-
-func init() {
-	var seed int64
-	binary.Read(crand.Reader, binary.LittleEndian, &seed)
-	rand.Seed(seed)
-}
 
 type T interface{}
 
@@ -101,4 +93,10 @@ func (t sliceSorter) Less(i, j int) bool {
 
 func (t sliceSorter) Swap(i, j int) {
 	t.swap(i, j)
+}
+
+func (s Ts) Clone() (ret Ts) {
+	ret = make([]T, len(s))
+	copy(ret, s)
+	return
 }
