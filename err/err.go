@@ -11,7 +11,7 @@ type Err struct {
 }
 
 func (e *Err) Error() string {
-	return fmt.Sprintf("%s: %s\n%v", e.Pkg, e.Info, e.Err)
+	return fmt.Sprintf("%s error: %s caused by\n%v", e.Pkg, e.Info, e.Err)
 }
 
 func makeErr(err error, info string) *Err {
