@@ -16,7 +16,7 @@ func (s Set) Del(t T) {
 	delete(s, t)
 }
 
-func (s Set) In(t T) (ok bool) {
+func (s Set) Has(t T) (ok bool) {
 	_, ok = s[t]
 	return
 }
