@@ -11,6 +11,9 @@ type Err struct {
 }
 
 func (e *Err) Error() string {
+	if e.Err == nil {
+		return fmt.Sprintf("%s: %s", e.Pkg, e.Info)
+	}
 	return fmt.Sprintf("%s: %s\n%v", e.Pkg, e.Info, e.Err)
 }
 
