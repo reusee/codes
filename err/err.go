@@ -25,13 +25,10 @@ func makeErr(err error, info string) *Err {
 	}
 }
 
-func ce(err error, info string) (ret bool) {
-	ret = true
+func ce(err error, info string) {
 	if err != nil {
 		panic(makeErr(err, info))
 	}
-	ret = false
-	return
 }
 
 func ct(err *error) {
