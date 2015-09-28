@@ -17,7 +17,7 @@ func (e *Err) Error() string {
 	return fmt.Sprintf("%s: %s\n%v", e.Pkg, e.Info, e.Err)
 }
 
-func makeErr(err error, info string) *Err {
+func me(err error, info string) *Err {
 	return &Err{
 		Pkg:  Pkg,
 		Info: info,
@@ -27,7 +27,7 @@ func makeErr(err error, info string) *Err {
 
 func ce(err error, info string) {
 	if err != nil {
-		panic(makeErr(err, info))
+		panic(me(err, info))
 	}
 }
 
