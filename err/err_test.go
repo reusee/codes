@@ -48,6 +48,36 @@ func TestNoError(t *testing.T) {
 	}
 }
 
+func TestFormat(t *testing.T) {
+	err := me(nil, "foo")
+	if err.Error() != "packageName: foo" {
+		t.Fatal("format error")
+	}
+	err = me(nil, "foo%s", "bar")
+	if err.Error() != "packageName: foobar" {
+		t.Fatal("format error")
+	}
+}
+
+func TestPanic(t *testing.T) {
+	var err error
+	func() {
+		defer func() {
+			p := recover()
+			if ps, ok := p.(string); !ok || ps != "foo" {
+				t.Fail()
+			}
+			if err != nil {
+				t.Fail()
+			}
+		}()
+		func() {
+			defer ct(&err)
+			panic("foo")
+		}()
+	}()
+}
+
 func BenchmarkCatchError(b *testing.B) {
 	var err error
 	e := errors.New("foo")

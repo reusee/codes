@@ -7,27 +7,34 @@ var Pkg = "packageName"
 type Err struct {
 	Pkg  string
 	Info string
-	Err  error
+	Prev error
 }
 
 func (e *Err) Error() string {
-	if e.Err == nil {
+	if e.Prev == nil {
 		return fmt.Sprintf("%s: %s", e.Pkg, e.Info)
 	}
-	return fmt.Sprintf("%s: %s\n%v", e.Pkg, e.Info, e.Err)
+	return fmt.Sprintf("%s: %s\n%v", e.Pkg, e.Info, e.Prev)
 }
 
-func me(err error, info string) *Err {
+func me(err error, format string, args ...interface{}) *Err {
+	if len(args) > 0 {
+		return &Err{
+			Pkg:  Pkg,
+			Info: fmt.Sprintf(format, args...),
+			Prev: err,
+		}
+	}
 	return &Err{
 		Pkg:  Pkg,
-		Info: info,
-		Err:  err,
+		Info: format,
+		Prev: err,
 	}
 }
 
-func ce(err error, info string) {
+func ce(err error, format string, args ...interface{}) {
 	if err != nil {
-		panic(me(err, info))
+		panic(me(err, format, args...))
 	}
 }
 
