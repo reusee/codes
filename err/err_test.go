@@ -78,6 +78,27 @@ func TestPanic(t *testing.T) {
 	}()
 }
 
+func TestOrigin(t *testing.T) {
+	e := errors.New("foo")
+	if oe(e) != e {
+		t.Fatal("origin error")
+	}
+	e2 := me(e, "bar")
+	if oe(e2) != e {
+		t.Fatal("origin error")
+	}
+	e2 = me(nil, "foo")
+	if oe(e2) != e2 {
+		t.Fatal("origin error")
+	}
+	if oe(me(me(me(e, "foo"), "bar"), "baz")) != e {
+		t.Fatal("origin error")
+	}
+	if oe(nil) != nil {
+		t.Fatal("origin error")
+	}
+}
+
 func BenchmarkCatchError(b *testing.B) {
 	var err error
 	e := errors.New("foo")
