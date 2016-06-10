@@ -6,6 +6,10 @@ import (
 
 func TestAll(t *testing.T) {
 	m := new(CowMap)
+	_, ok := m.Get("foo")
+	if ok {
+		t.Fail()
+	}
 	m.Set("foo", "bar")
 	m.Set("foo", "bar")
 	if len(m.s.Load().(map[Key]Value)) != 1 {

@@ -15,7 +15,10 @@ type CowMap struct {
 }
 
 func (m *CowMap) Get(key Key) (value Value, ok bool) {
-	value, ok = m.s.Load().(map[Key]Value)[key]
+	v := m.s.Load()
+	if v != nil {
+		value, ok = v.(map[Key]Value)[key]
+	}
 	return
 }
 
