@@ -1,0 +1,25 @@
+package cowmap
+
+import (
+	"testing"
+)
+
+func TestAll(t *testing.T) {
+	m := new(CowMap)
+	m.Set("foo", "bar")
+	m.Set("foo", "bar")
+	if len(m.s.Load().(map[Key]Value)) != 1 {
+		t.Fail()
+	}
+	v, ok := m.Get("foo")
+	if !ok {
+		t.Fail()
+	}
+	if v != "bar" {
+		t.Fail()
+	}
+	_, ok = m.Get("bar")
+	if ok {
+		t.Fail()
+	}
+}
