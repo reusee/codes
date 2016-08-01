@@ -26,4 +26,15 @@ func TestAll(t *testing.T) {
 	if ok {
 		t.Fail()
 	}
+	m.Delete("foo")
+	if len(m.s.Load().(map[Key]Value)) != 0 {
+		t.Fail()
+	}
+
+	m.Set("FOO", "FOO")
+	m.Set("BAR", "BAR")
+	m.Clear()
+	if len(m.s.Load().(map[Key]Value)) != 0 {
+		t.Fail()
+	}
 }
