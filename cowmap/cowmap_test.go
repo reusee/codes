@@ -37,4 +37,14 @@ func TestAll(t *testing.T) {
 	if len(m.s.Load().(map[Key]Value)) != 0 {
 		t.Fail()
 	}
+
+	m.Set("foo", "foo")
+	m.Set("bar", "bar")
+	n := 0
+	m.IterKeys(func(key Key) {
+		n++
+	})
+	if n != 2 {
+		t.Fail()
+	}
 }

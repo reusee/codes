@@ -67,3 +67,12 @@ func (m *CowMap) Clear() {
 	fresh := make(map[Key]Value)
 	m.s.Store(fresh)
 }
+
+func (m *CowMap) IterKeys(fn func(Key)) {
+	mp, ok := m.s.Load().(map[Key]Value)
+	if ok {
+		for k := range mp {
+			fn(k)
+		}
+	}
+}
